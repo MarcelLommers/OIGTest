@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -23,8 +24,10 @@ namespace OIG_Test.Models
         public int ResearchId { get; set; }
         [Required(ErrorMessage ="Research requires Name")]
         public string Name { get; set; }
+        [Remote(action: "VerifyResearchDuration", controller: "Researches", AdditionalFields = nameof(EndDate))]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm:ss}", ApplyFormatInEditMode = true)]
         public DateTime StartDate { get; set; }
+        [Remote(action: "VerifyResearchDuration", controller: "Researches", AdditionalFields = nameof(StartDate))]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm:ss}", ApplyFormatInEditMode = true)]
         public DateTime EndDate { get; set; }
         [NotMapped]

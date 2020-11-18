@@ -177,3 +177,5 @@ D:\repo's\OIG_test\OIG_Test\obj\Debug\netcoreapp3.1\Razor\Views\Researches\Delet
 D:\repo's\OIG_test\OIG_Test\obj\Debug\netcoreapp3.1\Razor\Views\Researches\Details.cshtml.g.cs
 D:\repo's\OIG_test\OIG_Test\obj\Debug\netcoreapp3.1\Razor\Views\Researches\Edit.cshtml.g.cs
 D:\repo's\OIG_test\OIG_Test\obj\Debug\netcoreapp3.1\Razor\Views\Researches\Index.cshtml.g.cs
+D:\repo's\OIG_test\OIG_Test\obj\Debug\netcoreapp3.1\Razor\Views\Researches\Stop.cshtml.g.cs
+D:\repo's\OIG_test\OIG_Test\obj\Debug\netcoreapp3.1\Razor\Views\Researches\Entry.cshtml.g.cs

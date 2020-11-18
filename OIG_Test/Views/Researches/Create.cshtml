@@ -3,8 +3,8 @@
 @{
     ViewData["Title"] = "Create";
 
-    var defaultStartTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss").Replace(' ', 'T');
-    var defaultEndTime = DateTime.Now.AddHours(1).ToString("yyyy-MM-dd HH:mm:ss").Replace(' ', 'T');
+    var defaultStartTime = DateTime.Now.AddMinutes(1).ToString("yyyy-MM-dd HH:mm:ss").Replace(' ', 'T');
+    var defaultEndTime = DateTime.Now.AddHours(1).AddMinutes(1).ToString("yyyy-MM-dd HH:mm:ss").Replace(' ', 'T');
 }
 
 <h1>Create</h1>

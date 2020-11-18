@@ -1,11 +1,21 @@
 ﻿@model IEnumerable<OIG_Test.Models.Research>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Research Index";
 }
 
 @functions {
     public Boolean canEdit(DateTime startDate)
+    {
+        DateTime currentTime = DateTime.Now;
+        return currentTime < startDate;
+    }
+    public Boolean canStop(DateTime startDate, DateTime endDate)
+    {
+        DateTime currentTime = DateTime.Now;
+        return currentTime > startDate && currentTime < endDate;
+    }
+    public Boolean canDelete(DateTime startDate)
     {
         DateTime currentTime = DateTime.Now;
         return currentTime < startDate;
@@ -17,26 +27,40 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+
+<form asp-controller="Researches" asp-action="Index" method="get">
+    <p>
+        Name: <input type="text" name="SearchString" value="@ViewBag.currentFilter">
+        <input type="submit" value="Filter" />
+    </p>
+</form>
+
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                @Html.ActionLink("Name", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.StartDate)
+                @Html.DisplayNameFor(model => model.ResearchState)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.EndDate)
+                @Html.ActionLink("StartDate", "Index", new { sortOrder = ViewBag.StartDateSortParm, currentFilter = ViewBag.CurrentFilter })
+            </th>
+            <th>
+                @Html.ActionLink("EndDate", "Index", new { sortOrder = ViewBag.EndDateSortParm, currentFilter = ViewBag.CurrentFilter })
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
-        <tr>
+        <tr class="@item.ResearchState">
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ResearchState)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.StartDate)
@@ -45,14 +69,53 @@
                 @Html.DisplayFor(modelItem => item.EndDate)
             </td>
             <td>
-                <a asp-action="Details" asp-route-id="@item.ResearchId">Details</a> |
-                @if (@canEdit(item.StartDate))
+                <a asp-action="Details" asp-route-id="@item.ResearchId">Details</a>
+                @if (canEdit(item.StartDate) ||
+                  canStop(item.StartDate, item.EndDate) ||
+                  canDelete(item.StartDate))
                 {
-                    <a asp-action="Edit" asp-route-id="@item.ResearchId">Edit</a> @(" |");
+                    @(" |");
                 }
-                <a asp-action="Delete" asp-route-id="@item.ResearchId">Delete</a>
+
+                @if (canEdit(item.StartDate))
+                {
+                    <a asp-action="Edit" asp-route-id="@item.ResearchId">Edit</a>
+                    @if (canStop(item.StartDate, item.EndDate) ||
+                      canDelete(item.StartDate))
+                    {
+                        @(" |");
+                    }
+                }
+
+                @if (canStop(item.StartDate, item.EndDate))
+                {
+                    <a asp-action="Entry" asp-route-id="@item.ResearchId">Add Entry</a> @(" |");
+                    <a asp-action="Stop" asp-route-id="@item.ResearchId">Stop</a>
+                    @if (canDelete(item.StartDate))
+                    {
+                        @(" |");
+                    }
+                }
+
+                @if (canDelete(item.StartDate))
+                {
+                    <a asp-action="Delete" asp-route-id="@item.ResearchId">Delete</a>
+                }
+
             </td>
         </tr>
 }
     </tbody>
 </table>
+
+<style>
+    .Gepland {
+        background-color: #f1f1f1;
+    }
+    .Lopend {
+        background-color: #f5e27e;
+    }
+    .Afgerond {
+        background-color: #a0e57c;
+    }
+</style>

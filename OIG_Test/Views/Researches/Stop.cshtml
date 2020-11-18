@@ -1,12 +1,12 @@
 ﻿@model OIG_Test.Models.Research
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Stop";
 }
 
-<h1>Delete</h1>
+<h1>Stop</h1>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>Are you sure you want to stop this research?</h3>
 <div>
     <h4>Research</h4>
     <hr />
@@ -37,9 +37,9 @@
         </dd>
     </dl>
     
-    <form asp-action="Delete">
+    <form asp-action="Stop">
         <input type="hidden" asp-for="ResearchId" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <input type="submit" value="Stop" class="btn btn-danger" /> |
         <a asp-action="Index">Back to List</a>
     </form>
 </div>

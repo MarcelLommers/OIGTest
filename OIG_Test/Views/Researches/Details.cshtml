@@ -2,14 +2,11 @@
 
 @{
     ViewData["Title"] = "Details";
-}
 
-@functions {
-    public Boolean canEdit(DateTime startDate)
-    {
-        DateTime currentTime = DateTime.Now;
-        return currentTime < startDate;
-    }
+    // Editing can only happen before the research has started.
+    bool canEdit = DateTime.Now < Model.StartDate;
+    // Research is always allowed to be stopped.
+    bool canStop = Model.StartDate < DateTime.Now && DateTime.Now < Model.EndDate;
 }
 
 <h1>Details</h1>
@@ -46,9 +43,13 @@
 </div>
 <div>
 
-    @if (@canEdit(@Model.StartDate))
+    @if (canEdit)
     {
         <a asp-action="Edit" asp-route-id="@Model.ResearchId">Edit</a> @(" |")
+    }
+    @if (canStop)
+    {
+        <a asp-action="Stop" asp-route-id="@Model.ResearchId">Stop</a> @(" |")
     }
     <a asp-action="Index">Back to List</a>
 </div>

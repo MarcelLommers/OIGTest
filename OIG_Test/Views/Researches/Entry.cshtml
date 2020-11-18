@@ -1,0 +1,22 @@
+﻿@model OIG_Test.Models.Research
+
+@{
+    ViewData["Title"] = "Entry";
+}
+
+<h1>@Html.DisplayFor(model => model.Name) : @Html.DisplayFor(model => model.ResearchState)</h1>
+
+<div>
+    <h4>participant entry form:</h4>
+    <hr />
+    <div class="form-group">
+        <label class="control-label">example question:</label>
+        <input class="form-control col-sm-10" value="example answer." />
+    </div>
+
+    <form asp-action="Submit">
+        <input type="hidden" asp-for="ResearchId" />
+        <input type="submit" disabled value="Submit" class="btn btn-primary" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>
