@@ -8,6 +8,10 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using OIG_Test.DBInfra;
+using OIG_Test.DBInfra.Interfaces;
+using OIG_Test.DBInfra.DataAccess;
+using Microsoft.EntityFrameworkCore;
 
 namespace OIG_Test
 {
@@ -23,6 +27,12 @@ namespace OIG_Test
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<DataContext>
+                (o => o.UseSqlServer(Configuration.
+                GetConnectionString("DefaultConnection")));
+
+            services.AddScoped<IResearchAccess, ResearchAccess>();
+
             services.AddControllersWithViews();
         }
 

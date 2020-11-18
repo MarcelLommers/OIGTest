@@ -1,0 +1,54 @@
+﻿@model OIG_Test.Models.Research
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+@functions {
+    public Boolean canEdit(DateTime startDate)
+    {
+        DateTime currentTime = DateTime.Now;
+        return currentTime < startDate;
+    }
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Research</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.startDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.startDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.endDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.endDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.researchState)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.researchState)
+        </dd>
+    </dl>
+</div>
+<div>
+
+    @if (@canEdit(@Model.startDate))
+    {
+        <a asp-action="Edit" asp-route-id="@Model.ResearchId">Edit</a> @(" |")
+    }
+    <a asp-action="Index">Back to List</a>
+</div>
