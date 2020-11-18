@@ -57,11 +57,11 @@ namespace OIG_Test.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ResearchId,Name,startDate,endDate")] Research research)
+        public async Task<IActionResult> Create([Bind("ResearchId,Name,StartDate,EndDate")] Research research)
         {
-            TimeSpan researchDuration = research.endDate - research.startDate ;
+            TimeSpan researchDuration = research.EndDate - research.StartDate ;
 
-            Boolean startsInFuture = DateTime.Now < research.startDate;
+            Boolean startsInFuture = DateTime.Now < research.StartDate;
 
             // research is in the future and has a minimum duration of 1 hour
             if (startsInFuture &&
@@ -96,7 +96,7 @@ namespace OIG_Test.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ResearchId,Name,startDate,endDate")] Research research)
+        public async Task<IActionResult> Edit(int id, [Bind("ResearchId,Name,StartDate,EndDate")] Research research)
         {
             if (id != research.ResearchId)
             {

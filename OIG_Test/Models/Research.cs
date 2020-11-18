@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -23,42 +24,50 @@ namespace OIG_Test.Models
         [Required(ErrorMessage ="Research requires Name")]
         public string Name { get; set; }
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm:ss}", ApplyFormatInEditMode = true)]
-        public DateTime startDate { get; set; }
+        public DateTime StartDate { get; set; }
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm:ss}", ApplyFormatInEditMode = true)]
-        public DateTime endDate { get; set; }
+        public DateTime EndDate { get; set; }
         [NotMapped]
-        public ResearchState researchState { get; set; } 
-
-        Research ()
-        {
-            researchState = ResearchState.Concept;
-            DateTime currentTime = DateTime.Now;
-            
-            // Instantiated researches will have a name.
-            if (Name != null)
+        [BindNever]
+        public ResearchState ResearchState {
+            get
             {
-                // Research hasn't started yet.
-                if (currentTime < startDate)
+                DateTime currentTime = DateTime.Now;
+
+                // Instantiated researches will have a name.
+                if (Name != null)
                 {
-                    researchState = ResearchState.Gepland;
-                }
-                // Research has started.
-                else
-                {
-                    // Research has ended.
-                    if (currentTime > endDate)
+                    // Research hasn't started yet.
+                    if (currentTime < StartDate)
                     {
-                        researchState = ResearchState.Afgerond;
+                        return ResearchState.Gepland;
                     }
-                    // Research hasn't ended yet.
+                    // Research has started.
                     else
                     {
-                        researchState = ResearchState.Lopend;
+                        // Research has ended.
+                        if (currentTime > EndDate)
+                        {
+                            return ResearchState.Afgerond;
+                        }
+                        // Research hasn't ended yet.
+                        else
+                        {
+                            return ResearchState.Lopend;
+                        }
                     }
+                } else
+                {
+                    return ResearchState.Concept;
                 }
             }
+            set { }
         }
 
+        public Research () {
+            StartDate = DateTime.Now;
+            EndDate = DateTime.Now.AddHours(1);
+        }
 
     }
 }
